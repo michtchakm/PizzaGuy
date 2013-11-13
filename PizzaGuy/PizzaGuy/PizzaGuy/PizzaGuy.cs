@@ -9,7 +9,6 @@ namespace PizzaGuy
 {
     class PizzaGuy : Sprite
     {
-        public virtual void Update(Gametime GameTime)
 
         public PizzaGuy(
             Vector2 location,
@@ -18,15 +17,18 @@ namespace PizzaGuy
             Vector2 velocity):
                 base(location, texture, initialFrame, velocity)
         {
-
+          
         }
 
-        public override Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            base.Update(GameTime);
+            base.Update(gameTime);
         }
             
-
+        public override void  Draw(SpriteBatch spriteBatch)
+        {
+ 	         base.Draw(spriteBatch);
+        }
 
     }
 }

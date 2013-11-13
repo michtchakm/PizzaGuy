@@ -18,6 +18,8 @@ namespace PizzaGuy
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D pacmanSheet;
+        PizzaGuy pacman;
 
         public Game1()
         {
@@ -47,6 +49,9 @@ namespace PizzaGuy
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            pacmanSheet = Content.Load<Texture2D>(@"Textures\pacmanSheet");
+
+            PizzaGuy pacman = new PizzaGuy();
             // TODO: use this.Content to load your game content here
         }
 
