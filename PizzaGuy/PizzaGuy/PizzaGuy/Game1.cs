@@ -20,6 +20,8 @@ namespace PizzaGuy
         SpriteBatch spriteBatch;
         Texture2D pacmanSheet;
         PizzaGuy pacman;
+        private Rectangle pacmanAreaLimit;
+        Vector2 destination;
 
         public Game1()
         {
@@ -49,9 +51,10 @@ namespace PizzaGuy
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            pacmanSheet = Content.Load<Texture2D>(@"Textures\pacmanSheet");
+            pacmanSheet = Content.Load<Texture2D>(@"pacman");
 
-            PizzaGuy pacman = new PizzaGuy();
+            pacman = new PizzaGuy(new Vector2(300, 300), pacmanSheet, new Rectangle(5, 26, 17, 17), Vector2.Zero);
+            pacman.AddFrame(new Rectangle(25,25,15,17));
             // TODO: use this.Content to load your game content here
         }
 
@@ -69,6 +72,82 @@ namespace PizzaGuy
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
+        private void HandleKeyboardInput(KeyboardState keyState)
+        {
+            if (keyState.IsKeyDown(Keys.Up))
+            {
+                pacman.Velocity += new Vector2(0, -100);
+                pacman.Rotation = MathHelper.PiOver2;
+                destination = pacman.Location - new Vector2(0, -32);
+                if (pacman.Location == destination)
+                {
+                    pacman.Velocity = new Vector2(0, 0);
+                }
+            }
+
+            if (keyState.IsKeyDown(Keys.Down))
+            {
+                pacman.Velocity += new Vector2(0, 100);
+                pacman.Rotation = -MathHelper.PiOver2;
+                destination = pacman.Location - new Vector2(0, 32);
+                if (pacman.Location == destination)
+                {
+                    pacman.Velocity = new Vector2(0, 0);
+                }
+            }
+
+            if (keyState.IsKeyDown(Keys.Left))
+            {
+                pacman.Velocity += new Vector2(-100, 0);
+                pacman.Rotation = 0f;
+                destination = pacman.Location - new Vector2(-32, 0);
+                if (pacman.Location == destination)
+                {
+                    pacman.Velocity = new Vector2(0, 0);
+                }
+            }
+
+            if (keyState.IsKeyDown(Keys.Right))
+            {
+                pacman.Velocity += new Vector2(100, 0);
+                pacman.Rotation = MathHelper.PiOver2;
+                destination = pacman.Location - new Vector2(32, 0);
+                if (pacman.Location == destination)
+                {
+                    pacman.Velocity = new Vector2(0, 0);
+                }
+            }
+
+            else
+            {
+                pacman.Velocity = new Vector2(0, 0);
+            }
+        }
+
+        private void imposeMovementLimits()
+        {
+            Vector2 location = pacman.Location;
+
+            if (location.X < pacmanAreaLimit.X)
+                location.X = pacmanAreaLimit.X;
+
+            if (location.X >
+                (pacmanAreaLimit.Right - pacman.Source.Width))
+                location.X =
+                    (pacmanAreaLimit.Right - pacman.Source.Width);
+
+            if (location.Y < pacmanAreaLimit.Y)
+                location.Y = pacmanAreaLimit.Y;
+
+            if (location.Y >
+                (pacmanAreaLimit.Bottom - pacman.Source.Height))
+                location.Y =
+                    (pacmanAreaLimit.Bottom - pacman.Source.Height);
+
+            pacman.Location = location;
+        }
+
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
@@ -76,7 +155,8 @@ namespace PizzaGuy
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            pacman.Update(gameTime);
+            HandleKeyboardInput(Keyboard.GetState());
             base.Update(gameTime);
         }
 
@@ -89,7 +169,9 @@ namespace PizzaGuy
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            pacman.Draw(spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
