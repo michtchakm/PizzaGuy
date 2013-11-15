@@ -7,8 +7,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace PizzaGuy
 {
+    enum Direction
+    {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+    
     class PizzaGuy : Sprite
     {
+        public Direction direction;
 
         public PizzaGuy(
             Vector2 location,
@@ -16,8 +25,7 @@ namespace PizzaGuy
             Rectangle initialFrame,
             Vector2 velocity):
                 base(location, texture, initialFrame, velocity)
-        {
-          
+        {       
         }
 
         public override void Update(GameTime gameTime)

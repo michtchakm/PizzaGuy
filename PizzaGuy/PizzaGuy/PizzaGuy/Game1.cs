@@ -80,10 +80,8 @@ namespace PizzaGuy
                 pacman.Velocity += new Vector2(0, -100);
                 pacman.Rotation = MathHelper.PiOver2;
                 destination = pacman.Location - new Vector2(0, -32);
-                if (pacman.Location == destination)
-                {
-                    pacman.Velocity = new Vector2(0, 0);
-                }
+
+                pacman.direction = Direction.UP;
             }
 
             if (keyState.IsKeyDown(Keys.Down))
@@ -91,10 +89,8 @@ namespace PizzaGuy
                 pacman.Velocity += new Vector2(0, 100);
                 pacman.Rotation = -MathHelper.PiOver2;
                 destination = pacman.Location - new Vector2(0, 32);
-                if (pacman.Location == destination)
-                {
-                    pacman.Velocity = new Vector2(0, 0);
-                }
+
+                pacman.direction = Direction.DOWN;
             }
 
             if (keyState.IsKeyDown(Keys.Left))
@@ -102,10 +98,8 @@ namespace PizzaGuy
                 pacman.Velocity += new Vector2(-100, 0);
                 pacman.Rotation = 0f;
                 destination = pacman.Location - new Vector2(-32, 0);
-                if (pacman.Location == destination)
-                {
-                    pacman.Velocity = new Vector2(0, 0);
-                }
+
+                pacman.direction = Direction.LEFT;
             }
 
             if (keyState.IsKeyDown(Keys.Right))
@@ -113,10 +107,17 @@ namespace PizzaGuy
                 pacman.Velocity += new Vector2(100, 0);
                 pacman.Rotation = MathHelper.PiOver2;
                 destination = pacman.Location - new Vector2(32, 0);
-                if (pacman.Location == destination)
-                {
-                    pacman.Velocity = new Vector2(0, 0);
-                }
+
+                pacman.direction = Direction.RIGHT;
+            }
+
+            if (pacman.Velocity.X > 0 && pacman.Location.X >= destination.X ||
+               pacman.Velocity.X < 0 && pacman.Location.X <= destination.X ||
+               pacman.Velocity.Y >  0 && pacman.Location.Y >= destination.Y  ||
+               pacman.Velocity.Y < 0 && pacman.Location.Y <= destination.Y)
+            {
+                pacman.Velocity = new Vector2(0, 0);
+                //pacman.Location = destination;
             }
 
             else
@@ -166,7 +167,7 @@ namespace PizzaGuy
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
