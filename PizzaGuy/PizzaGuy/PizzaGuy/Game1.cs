@@ -78,7 +78,7 @@ namespace PizzaGuy
             if (keyState.IsKeyDown(Keys.Up))
             {
                 pacman.Velocity += new Vector2(0, -100);
-                pacman.Rotation = MathHelper.PiOver2;
+                pacman.Rotation = -MathHelper.PiOver2;
                 destination = pacman.Location - new Vector2(0, -32);
 
                 pacman.direction = Direction.UP;
@@ -87,7 +87,7 @@ namespace PizzaGuy
             if (keyState.IsKeyDown(Keys.Down))
             {
                 pacman.Velocity += new Vector2(0, 100);
-                pacman.Rotation = -MathHelper.PiOver2;
+                pacman.Rotation = MathHelper.PiOver2;
                 destination = pacman.Location - new Vector2(0, 32);
 
                 pacman.direction = Direction.DOWN;
@@ -96,7 +96,7 @@ namespace PizzaGuy
             if (keyState.IsKeyDown(Keys.Left))
             {
                 pacman.Velocity += new Vector2(-100, 0);
-                pacman.Rotation = 0f;
+                pacman.Rotation = -MathHelper.PiOver2;
                 destination = pacman.Location - new Vector2(-32, 0);
 
                 pacman.direction = Direction.LEFT;
@@ -117,13 +117,33 @@ namespace PizzaGuy
                pacman.Velocity.Y < 0 && pacman.Location.Y <= destination.Y)
             {
                 pacman.Velocity = new Vector2(0, 0);
-                //pacman.Location = destination;
+                pacman.Location = destination;
             }
 
             else
             {
                 pacman.Velocity = new Vector2(0, 0);
             }
+        }
+
+        if (pacman.Location.X < 0)
+        {
+                pacman.Velocity += new Vector2(0, 0);
+        }
+
+        if (pacman.Location.X > )
+        {
+                pacman.Velocity *= new Vector2(0, 0);
+        }
+
+        if (pacman.Location.Y < 0)
+        {
+                pacman.Velocity == new Vector2(0, 0);
+        }
+
+        if (pacman.Location.Y > )
+        {
+                pacman.Velocity *= new Vector2(0, 0);
         }
 
         private void imposeMovementLimits()
