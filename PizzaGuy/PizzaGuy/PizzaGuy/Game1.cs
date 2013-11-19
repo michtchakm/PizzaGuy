@@ -72,51 +72,68 @@ namespace PizzaGuy
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
+        public void  UpdateDirection()
+        {
+            switch (pacman.direction)
+            {
+                case Direction.UP:
+                    pacman.Velocity = new Vector2(0, -100);
+                    pacman.Rotation = MathHelper.PiOver2;
+                    destination = pacman.Location - new Vector2(0, -32);
+                    break;
+             
+                case Direction.DOWN:
+                    pacman.Velocity = new Vector2(0, 100);
+                    pacman.Rotation = -MathHelper.PiOver2;
+                    destination = pacman.Location + new Vector2(0, 32);
+                    break;
+    
+                case Direction.LEFT:
+                    pacman.Velocity = new Vector2(-100, 0);
+                    pacman.Rotation = 0f;
+                    destination = pacman.Location - new Vector2(-32, 0);
+                    break;
+
+                case Direction.RIGHT:
+                    pacman.Velocity = new Vector2(100, 0);
+                    pacman.Rotation = MathHelper.Pi;
+                    destination = pacman.Location + new Vector2(32, 0);
+                    break;
+            }
+        }
 
         private void HandleKeyboardInput(KeyboardState keyState)
         {
             if (keyState.IsKeyDown(Keys.Up))
             {
-                pacman.Velocity += new Vector2(0, -100);
-                pacman.Rotation = -MathHelper.PiOver2;
-                destination = pacman.Location - new Vector2(0, -32);
-
                 pacman.direction = Direction.UP;
             }
 
             if (keyState.IsKeyDown(Keys.Down))
             {
-                pacman.Velocity += new Vector2(0, 100);
-                pacman.Rotation = MathHelper.PiOver2;
-                destination = pacman.Location - new Vector2(0, 32);
-
                 pacman.direction = Direction.DOWN;
             }
 
             if (keyState.IsKeyDown(Keys.Left))
             {
-                pacman.Velocity += new Vector2(-100, 0);
-                pacman.Rotation = -MathHelper.PiOver2;
-                destination = pacman.Location - new Vector2(-32, 0);
-
                 pacman.direction = Direction.LEFT;
             }
 
             if (keyState.IsKeyDown(Keys.Right))
             {
-                pacman.Velocity += new Vector2(100, 0);
-                pacman.Rotation = MathHelper.PiOver2;
-                destination = pacman.Location - new Vector2(32, 0);
-
                 pacman.direction = Direction.RIGHT;
             }
 
             if (pacman.Velocity.X > 0 && pacman.Location.X >= destination.X ||
                pacman.Velocity.X < 0 && pacman.Location.X <= destination.X ||
-               pacman.Velocity.Y >  0 && pacman.Location.Y >= destination.Y  ||
+               pacman.Velocity.Y > 0 && pacman.Location.Y >= destination.Y ||
                pacman.Velocity.Y < 0 && pacman.Location.Y <= destination.Y)
             {
                 pacman.Velocity = new Vector2(0, 0);
+
+                UpdateDirection();
+
                 pacman.Location = destination;
             }
 
@@ -124,27 +141,29 @@ namespace PizzaGuy
             {
                 pacman.Velocity = new Vector2(0, 0);
             }
-        }
 
-        if (pacman.Location.X < 0)
-        {
-                pacman.Velocity += new Vector2(0, 0);
-        }
 
-        if (pacman.Location.X > )
-        {
+            if (pacman.Location.X < 0)
+            {
                 pacman.Velocity *= new Vector2(0, 0);
-        }
+            }
 
-        if (pacman.Location.Y < 0)
-        {
-                pacman.Velocity == new Vector2(0, 0);
-        }
-
-        if (pacman.Location.Y > )
-        {
+            if (pacman.Location.X > this.Window.ClientBounds.Width)
+            {
                 pacman.Velocity *= new Vector2(0, 0);
+            }
+
+            if (pacman.Location.Y > this.Window.ClientBounds.Height)
+            {
+                pacman.Velocity *= new Vector2(0, 0);
+            }
+
+            if (pacman.Location.Y < 0)
+            {
+                pacman.Velocity *= new Vector2(0, 0);
+            }
         }
+
 
         private void imposeMovementLimits()
         {
