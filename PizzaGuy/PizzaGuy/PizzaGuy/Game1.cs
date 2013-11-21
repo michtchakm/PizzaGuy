@@ -54,7 +54,11 @@ namespace PizzaGuy
             pacmanSheet = Content.Load<Texture2D>(@"pacman");
 
             pacman = new PizzaGuy(new Vector2(300, 300), pacmanSheet, new Rectangle(5, 26, 17, 17), Vector2.Zero);
+            
             pacman.AddFrame(new Rectangle(25,25,15,17));
+
+            UpdateDirection();
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -79,25 +83,25 @@ namespace PizzaGuy
             {
                 case Direction.UP:
                     pacman.Velocity = new Vector2(0, -100);
-                    pacman.Rotation = MathHelper.PiOver2;
-                    destination = pacman.Location - new Vector2(0, -32);
+                    pacman.Rotation = -MathHelper.PiOver2;
+                    destination = pacman.Location - new Vector2(0, 32);
                     break;
              
                 case Direction.DOWN:
                     pacman.Velocity = new Vector2(0, 100);
-                    pacman.Rotation = -MathHelper.PiOver2;
+                    pacman.Rotation = MathHelper.PiOver2;
                     destination = pacman.Location + new Vector2(0, 32);
                     break;
     
                 case Direction.LEFT:
                     pacman.Velocity = new Vector2(-100, 0);
-                    pacman.Rotation = 0f;
-                    destination = pacman.Location - new Vector2(-32, 0);
+                    pacman.Rotation = MathHelper.Pi;
+                    destination = pacman.Location - new Vector2(32, 0);
                     break;
 
                 case Direction.RIGHT:
                     pacman.Velocity = new Vector2(100, 0);
-                    pacman.Rotation = MathHelper.Pi;
+                    pacman.Rotation =  0f;
                     destination = pacman.Location + new Vector2(32, 0);
                     break;
             }
@@ -125,66 +129,74 @@ namespace PizzaGuy
                 pacman.direction = Direction.RIGHT;
             }
 
-            if (pacman.Velocity.X > 0 && pacman.Location.X >= destination.X ||
-               pacman.Velocity.X < 0 && pacman.Location.X <= destination.X ||
-               pacman.Velocity.Y > 0 && pacman.Location.Y >= destination.Y ||
-               pacman.Velocity.Y < 0 && pacman.Location.Y <= destination.Y)
+            if ((pacman.Velocity.X > 0 && pacman.Location.X >= destination.X) ||
+               (pacman.Velocity.X < 0 && pacman.Location.X <= destination.X) ||
+               (pacman.Velocity.Y > 0 && pacman.Location.Y >= destination.Y) ||
+               (pacman.Velocity.Y < 0 && pacman.Location.Y <= destination.Y))
             {
                 pacman.Velocity = new Vector2(0, 0);
-
-                UpdateDirection();
-
                 pacman.Location = destination;
-            }
-
-            else
-            {
-                pacman.Velocity = new Vector2(0, 0);
-            }
-
-
-            if (pacman.Location.X < 0)
-            {
-                pacman.Velocity *= new Vector2(0, 0);
-            }
-
-            if (pacman.Location.X > this.Window.ClientBounds.Width)
-            {
-                pacman.Velocity *= new Vector2(0, 0);
-            }
-
-            if (pacman.Location.Y > this.Window.ClientBounds.Height)
-            {
-                pacman.Velocity *= new Vector2(0, 0);
-            }
-
-            if (pacman.Location.Y < 0)
-            {
-                pacman.Velocity *= new Vector2(0, 0);
+                UpdateDirection();
             }
         }
 
+//           if (pacman.Location.X < 0)
+  //          {
+    //            pacman.Velocity *= new Vector2(0, 0);
+      //      }
+
+   //         if (pacman.Location.X > this.Window.ClientBounds.Width)
+     //       {
+       //         pacman.Velocity *= new Vector2(0, 0);
+         //   }
+//
+//            if (pacman.Location.Y > this.Window.ClientBounds.Height)
+  //          {
+    //            pacman.Velocity *= new Vector2(0, 0);
+      //      }
+            //
+   //         if (pacman.Location.Y < 0)
+ //           {
+     //           pacman.Velocity *= new Vector2(0, 0);
+      //      }
+       // }
 
         private void imposeMovementLimits()
         {
             Vector2 location = pacman.Location;
 
-            if (location.X < pacmanAreaLimit.X)
-                location.X = pacmanAreaLimit.X;
+    //        if (location.X < 0)
+   //             location.X = 0;
+    //        
+    //        if (location.X >
+//            (800 - pacman.Source.Width))
+  //              location.X =
+    //                (800 - pacman.Source.Width);
 
-            if (location.X >
+  //          if (location.Y < 0)
+    //            location.Y = 0;
+            //
+   //         if (location.Y >
+     //           (480 - pacman.Source.Height))
+       //         location.Y =
+        //            (480 - pacman.Source.Height);
+
+             if (location.X < pacmanAreaLimit.X)
+                 location.X = pacmanAreaLimit.X;
+            
+             if (location.X >
                 (pacmanAreaLimit.Right - pacman.Source.Width))
-                location.X =
-                    (pacmanAreaLimit.Right - pacman.Source.Width);
+                      location.X =
+                        (pacmanAreaLimit.Right - pacman.Source.Width);
 
-            if (location.Y < pacmanAreaLimit.Y)
+             if (location.Y < pacmanAreaLimit.Y)
                 location.Y = pacmanAreaLimit.Y;
 
-            if (location.Y >
+             if (location.Y >
                 (pacmanAreaLimit.Bottom - pacman.Source.Height))
-                location.Y =
-                    (pacmanAreaLimit.Bottom - pacman.Source.Height);
-
+                    location.Y =
+                   (pacmanAreaLimit.Bottom - pacman.Source.Height);
+            
             pacman.Location = location;
         }
 
