@@ -109,7 +109,7 @@
       <HintPath>.\tIDE.Plugin.dll</HintPath>
     </Reference>
     <Reference Include="xTile">
-      <HintPath>..\..\..\..\..\tIDE207\xTile.dll</HintPath>
+      <HintPath>.\xTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

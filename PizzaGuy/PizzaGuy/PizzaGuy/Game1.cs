@@ -20,7 +20,6 @@ namespace PizzaGuy
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Map mazemap;
         Texture2D pacmanSheet;
         PizzaGuy pacman;
         private Rectangle pacmanAreaLimit;
