@@ -20,9 +20,12 @@ namespace PizzaGuy
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Map map;
+        IDisplayDevice mapDisplayDevice;
+        xTile.Dimensions.Rectangle viewport;
         Texture2D pacmanSheet;
         PizzaGuy pacman;
-        private Rectangle pacmanAreaLimit;
+        //private Rectangle pacmanAreaLimit;
         Vector2 destination;
 
         public Game1()
@@ -41,6 +44,15 @@ namespace PizzaGuy
         {
             // TODO: Add your initialization logic here
 
+            
+
+            mapDisplayDevice = new XnaDisplayDevice(
+                this.Content, this.GraphicsDevice);
+
+           
+
+            viewport = new xTile.Dimensions.Rectangle(new xTile.Dimensions.Size(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
+            
             base.Initialize();
         }
 
@@ -53,11 +65,15 @@ namespace PizzaGuy
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            map = Content.Load<Map>("pacmanmap");
+            
+            map.LoadTileSheets(mapDisplayDevice);
+
             pacmanSheet = Content.Load<Texture2D>(@"pacman");            
 
-            pacman = new PizzaGuy(new Vector2(300, 300), pacmanSheet, new Rectangle(5, 26, 17, 17), Vector2.Zero);
+            pacman = new PizzaGuy(new Vector2(300, 300), pacmanSheet, new Rectangle(, , , ), Vector2.Zero);
             
-            pacman.AddFrame(new Rectangle(25,25,15,17));
+            pacman.AddFrame(new Rectangle(,,,));
 
             UpdateDirection();
 
@@ -183,23 +199,23 @@ namespace PizzaGuy
        //         location.Y =
         //            (480 - pacman.Source.Height);
 
-             if (location.X < pacmanAreaLimit.X)
-                 location.X = pacmanAreaLimit.X;
-            
-             if (location.X >
-                (pacmanAreaLimit.Right - pacman.Source.Width))
-                      location.X =
-                        (pacmanAreaLimit.Right - pacman.Source.Width);
-
-             if (location.Y < pacmanAreaLimit.Y)
-                location.Y = pacmanAreaLimit.Y;
-
-             if (location.Y >
-                (pacmanAreaLimit.Bottom - pacman.Source.Height))
-                    location.Y =
-                   (pacmanAreaLimit.Bottom - pacman.Source.Height);
-            
-            pacman.Location = location;
+   //          if (location.X < pacmanAreaLimit.X)
+   //              location.X = pacmanAreaLimit.X;
+  //          
+   //          if (location.X >
+   //             (pacmanAreaLimit.Right - pacman.Source.Width))
+    //                  location.X =
+    //                    (pacmanAreaLimit.Right - pacman.Source.Width);
+//
+   //          if (location.Y < pacmanAreaLimit.Y)
+     //           location.Y = pacmanAreaLimit.Y;
+            //
+//             if (location.Y >
+  //              (pacmanAreaLimit.Bottom - pacman.Source.Height))
+    //                location.Y =
+      //             (pacmanAreaLimit.Bottom - pacman.Source.Height);
+        //    
+               pacman.Location = location;
         }
 
         protected override void Update(GameTime gameTime)
@@ -209,6 +225,8 @@ namespace PizzaGuy
                 this.Exit();
 
             // TODO: Add your update logic here
+            map.Update(gameTime.ElapsedGameTime.Milliseconds);
+            viewport.X++;
             pacman.Update(gameTime);
             HandleKeyboardInput(Keyboard.GetState());
             base.Update(gameTime);
@@ -223,6 +241,7 @@ namespace PizzaGuy
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
+            map.Draw(mapDisplayDevice, viewport);
             spriteBatch.Begin();
             pacman.Draw(spriteBatch);
             spriteBatch.End();

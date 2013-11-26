@@ -7,3 +7,7 @@ C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\obj\x86\Deb
 C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\obj\x86\Debug\PizzaGuy.pdb
 C:\Users\eahscs\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\tIDE.Plugin.dll
 C:\Users\eahscs\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\xTile.dll
+C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\pacmanmap.xnb
+C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\breakout.xnb
+C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\pacman2.xnb
+C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\pacman3.xnb

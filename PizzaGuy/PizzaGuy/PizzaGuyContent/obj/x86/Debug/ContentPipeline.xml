@@ -7,8 +7,31 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\eahscs\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\pacman.xnb</Output>
-      <Time>2013-11-25T07:20:17.8578-05:00</Time>
+      <Output>C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\pacman.xnb</Output>
+      <Time>2013-11-26T07:16:39.967-05:00</Time>
+    </Item>
+    <Item>
+      <Source>pacmanmap.tide</Source>
+      <Name>pacmanmap</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\pacmanmap.xnb</Output>
+      <Time>2013-11-26T07:41:20.398-05:00</Time>
+      <Dependency>
+        <Key>breakout.png</Key>
+        <Value>2013-11-26T07:16:39.963-05:00</Value>
+      </Dependency>
+      <Request>C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\breakout.xnb</Request>
+    </Item>
+    <Item>
+      <Source>breakout.png</Source>
+      <Name>breakout</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\breakout.xnb</Output>
+      <Time>2013-11-26T07:16:39.963-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -16,15 +39,15 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\eahscs\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuyContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\eahscs\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\eahscs\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuyContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\eahscs\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuyContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuyContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuy\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
-        <Key>C:\Users\eahscs\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuyContent\xTile.Pipeline.dll</Key>
-        <Value>2013-11-25T07:20:17.8638-05:00</Value>
+        <Key>C:\Users\EAHSCS\Documents\GitHub\PizzaGuy\PizzaGuy\PizzaGuy\PizzaGuyContent\xTile.Pipeline.dll</Key>
+        <Value>2013-11-26T07:16:39.969-05:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
