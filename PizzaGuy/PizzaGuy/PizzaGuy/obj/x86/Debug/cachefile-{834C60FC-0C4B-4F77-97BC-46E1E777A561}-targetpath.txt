@@ -1,3 +1,5 @@
 Content\pacman.xnb
+Content\pacman4.xnb
+Content\pacman5.xnb
 Content\pacmanmap.xnb
 Content\breakout.xnb

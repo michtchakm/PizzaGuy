@@ -24,7 +24,7 @@ namespace PizzaGuy
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
         Texture2D pacmanSheet;
-        PizzaGuy pacman;
+        PizzaGuy pacman; 
         //private Rectangle pacmanAreaLimit;
         Vector2 destination;
 
@@ -69,11 +69,11 @@ namespace PizzaGuy
             
             map.LoadTileSheets(mapDisplayDevice);
 
-            pacmanSheet = Content.Load<Texture2D>(@"pacman");            
+            pacmanSheet = Content.Load<Texture2D>(@"pacman5");            
 
-            pacman = new PizzaGuy(new Vector2(300, 300), pacmanSheet, new Rectangle(, , , ), Vector2.Zero);
+            pacman = new PizzaGuy(new Vector2(300, 300), pacmanSheet, new Rectangle(13,56,31,33), Vector2.Zero);
             
-            pacman.AddFrame(new Rectangle(,,,));
+            pacman.AddFrame(new Rectangle(57,55,25,35));
 
             UpdateDirection();
 
