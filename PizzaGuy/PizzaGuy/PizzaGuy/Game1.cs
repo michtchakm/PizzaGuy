@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using xTile;
 using xTile.Display;
+using xTile.Tiles;
 
 namespace PizzaGuy
 {
@@ -19,40 +20,36 @@ namespace PizzaGuy
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Map map;
-        IDisplayDevice mapDisplayDevice;
-        xTile.Dimensions.Rectangle viewport;
+        public SpriteBatch spriteBatch;
+        PizzaGuy pizzaguy;
+        Ghost ghost;
         Texture2D pacmanSheet;
-        PizzaGuy pacman; 
-        //private Rectangle pacmanAreaLimit;
-        Vector2 destination;
+        Map map;
+        IDisplayDevice xnaDisplayDevice;
+        xTile.Dimensions.Rectangle viewport;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+
+            IsMouseVisible = true;
+
             Content.RootDirectory = "Content";
         }
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
+        /// related content. Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
 
-            
-
-            mapDisplayDevice = new XnaDisplayDevice(
-                this.Content, this.GraphicsDevice);
-
-           
-
+            xnaDisplayDevice = new xTile.Display.XnaDisplayDevice(Content, GraphicsDevice);
             viewport = new xTile.Dimensions.Rectangle(new xTile.Dimensions.Size(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
-            
+
             base.Initialize();
         }
 
@@ -63,19 +60,14 @@ namespace PizzaGuy
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            pacmanSheet = Content.Load<Texture2D>(@"pacman5");
             map = Content.Load<Map>("pacmanmap");
-            
-            map.LoadTileSheets(mapDisplayDevice);
+            map.LoadTileSheets(xnaDisplayDevice);
 
-            pacmanSheet = Content.Load<Texture2D>(@"pacman5");            
-
-            pacman = new PizzaGuy(new Vector2(300, 300), pacmanSheet, new Rectangle(13,56,31,33), Vector2.Zero);
-            
-            pacman.AddFrame(new Rectangle(57,55,25,35));
-
-            UpdateDirection();
+            pizzaguy = new PizzaGuy(new Vector2(32, 32), pacmanSheet, new Rectangle(300, 300, 32, 32), Vector2.Zero, map.GetLayer("pac layer"));
+            ghost = new Ghost(new Vector2(32, 32 * 10), pacmanSheet, new Rectangle(500, 300, 32, 32), Vector2.Zero, map.GetLayer("pac layer"), pizzaguy);
 
             // TODO: use this.Content to load your game content here
         }
@@ -84,6 +76,7 @@ namespace PizzaGuy
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
         /// </summary>
+        ///
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
@@ -94,143 +87,26 @@ namespace PizzaGuy
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        
-        public void  UpdateDirection()
-        {
-            switch (pacman.direction)
-            {
-                case Direction.UP:
-                    pacman.Velocity = new Vector2(0, -100);
-                    pacman.Rotation = -MathHelper.PiOver2;
-                    destination = pacman.Location - new Vector2(0, 32);
-                    break;
-             
-                case Direction.DOWN:
-                    pacman.Velocity = new Vector2(0, 100);
-                    pacman.Rotation = MathHelper.PiOver2;
-                    destination = pacman.Location + new Vector2(0, 32);
-                    break;
-    
-                case Direction.LEFT:
-                    pacman.Velocity = new Vector2(-100, 0);
-                    pacman.Rotation = MathHelper.Pi;
-                    destination = pacman.Location - new Vector2(32, 0);
-                    break;
-
-                case Direction.RIGHT:
-                    pacman.Velocity = new Vector2(100, 0);
-                    pacman.Rotation =  0f;
-                    destination = pacman.Location + new Vector2(32, 0);
-                    break;
-            }
-        }
-
-        private void HandleKeyboardInput(KeyboardState keyState)
-        {
-            if (keyState.IsKeyDown(Keys.Up))
-            {
-                pacman.direction = Direction.UP;
-            }
-
-            if (keyState.IsKeyDown(Keys.Down))
-            {
-                pacman.direction = Direction.DOWN;
-            }
-
-            if (keyState.IsKeyDown(Keys.Left))
-            {
-                pacman.direction = Direction.LEFT;
-            }
-
-            if (keyState.IsKeyDown(Keys.Right))
-            {
-                pacman.direction = Direction.RIGHT;
-            }
-
-            if ((pacman.Velocity.X > 0 && pacman.Location.X >= destination.X) ||
-               (pacman.Velocity.X < 0 && pacman.Location.X <= destination.X) ||
-               (pacman.Velocity.Y > 0 && pacman.Location.Y >= destination.Y) ||
-               (pacman.Velocity.Y < 0 && pacman.Location.Y <= destination.Y))
-            {
-                pacman.Velocity = new Vector2(0, 0);
-                pacman.Location = destination;
-                UpdateDirection();
-            }
-        }
-
-//           if (pacman.Location.X < 0)
-  //          {
-    //            pacman.Velocity *= new Vector2(0, 0);
-      //      }
-
-   //         if (pacman.Location.X > this.Window.ClientBounds.Width)
-     //       {
-       //         pacman.Velocity *= new Vector2(0, 0);
-         //   }
-//
-//            if (pacman.Location.Y > this.Window.ClientBounds.Height)
-  //          {
-    //            pacman.Velocity *= new Vector2(0, 0);
-      //      }
-            //
-   //         if (pacman.Location.Y < 0)
- //           {
-     //           pacman.Velocity *= new Vector2(0, 0);
-      //      }
-       // }
-
-        private void imposeMovementLimits()
-        {
-            Vector2 location = pacman.Location;
-
-    //        if (location.X < 0)
-   //             location.X = 0;
-    //        
-    //        if (location.X >
-//            (800 - pacman.Source.Width))
-  //              location.X =
-    //                (800 - pacman.Source.Width);
-
-  //          if (location.Y < 0)
-    //            location.Y = 0;
-            //
-   //         if (location.Y >
-     //           (480 - pacman.Source.Height))
-       //         location.Y =
-        //            (480 - pacman.Source.Height);
-
-   //          if (location.X < pacmanAreaLimit.X)
-   //              location.X = pacmanAreaLimit.X;
-  //          
-   //          if (location.X >
-   //             (pacmanAreaLimit.Right - pacman.Source.Width))
-    //                  location.X =
-    //                    (pacmanAreaLimit.Right - pacman.Source.Width);
-//
-   //          if (location.Y < pacmanAreaLimit.Y)
-     //           location.Y = pacmanAreaLimit.Y;
-            //
-//             if (location.Y >
-  //              (pacmanAreaLimit.Bottom - pacman.Source.Height))
-    //                location.Y =
-      //             (pacmanAreaLimit.Bottom - pacman.Source.Height);
-        //    
-               pacman.Location = location;
-        }
-
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            MouseState ms = Mouse.GetState();
+            int index = map.TileSheets[0].GetTileIndex(new xTile.Dimensions.Location(ms.X, ms.Y));
+            Tile tile = map.GetLayer("pac layer").Tiles[1, 1];
+
+            Window.Title = index.ToString();
+
             // TODO: Add your update logic here
-            map.Update(gameTime.ElapsedGameTime.Milliseconds);
-            viewport.X++;
-            pacman.Update(gameTime);
-            HandleKeyboardInput(Keyboard.GetState());
+            pizzaguy.Update(gameTime);
+            ghost.Update(gameTime);
+
             base.Update(gameTime);
         }
+
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -238,14 +114,20 @@ namespace PizzaGuy
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+
             GraphicsDevice.Clear(Color.Black);
 
+            map.Draw(xnaDisplayDevice, viewport);
+
             // TODO: Add your drawing code here
-            map.Draw(mapDisplayDevice, viewport);
+            //spriteBatch.Begin();
+            //spriteBatch.Draw(background, mainFrame, Color.Wheat);
+            //spriteBatch.End()
             spriteBatch.Begin();
-            pacman.Draw(spriteBatch);
-            spriteBatch.End();
+            pizzaguy.Draw(spriteBatch);
+            ghost.Draw(spriteBatch);
             base.Draw(gameTime);
+            spriteBatch.End();
         }
     }
 }
